@@ -1,0 +1,1 @@
+This is where I will document my steps (briefly i.e the most important checkpoints), result descriptions and interpretations, pipeline reproducibility instructions, and the general directory structure of the repository.

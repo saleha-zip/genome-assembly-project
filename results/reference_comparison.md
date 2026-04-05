@@ -1,0 +1,1 @@
+in this doc, I will compare between the final assembly with the S. cerevisiae_ S288C reference genome (https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt) 

@@ -1,0 +1,8 @@
+# Ignore large raw data
+data/
+
+# Ignore intermediate files if needed
+*.tmp
+
+# OS files
+.DS_Store
