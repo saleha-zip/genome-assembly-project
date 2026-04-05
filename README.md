@@ -95,9 +95,9 @@ All raw input data are publicly available on Zenodo. URLs are listed in `data/do
 
 ### Platform
 
-All steps were run on [Galaxy Europe](https://usegalaxy.eu/). To reproduce this analysis:
+All steps were run on [Galaxy](https://galaxy-main.usegalaxy.org/). To reproduce this analysis:
 
-1. Create an account at usegalaxy.eu.
+1. Create an account at usegalaxy.org.
 2. Create a new History named (e.g.) `VCF assembly pipeline`.
 3. Upload data via **Upload → Paste/Fetch Data** using the URLs above, setting the correct datatypes (`fasta`, `fastqsanger.gz`, `cmap`).
 4. Rename Hi-C datasets to `Hi-C_dataset_F` (forward) and `Hi-C_dataset_R` (reverse).
@@ -329,6 +329,7 @@ The YaHS BAM outputs (forward and reverse) were merged using **Filter and merge*
 
 GenomeScope estimates a haploid genome size of approximately **11.74 Mb**, consistent with the known *S. cerevisiae* genome. The genome is highly homozygous (~99.4%) with low heterozygosity (~0.58%). The majority of the genome is unique sequence (~11.0 Mb), with modest repetitive content (~0.72 Mb). The very low read error rate (~0.00094%) confirms high-quality HiFi sequencing, and the strong model fit (92–96%) indicates good agreement between the observed k-mer distribution and the inferred genome model. These properties — low complexity, high homozygosity, minimal repeats — make this genome well-suited for accurate assembly.
 
+![GenomeScope Linear Plot](results/genomescope/GenomeScope%20on%20meryldb%20histogram%20Linear%20plot.png)
 The **GenomeScope linear plot** shows two clear k-mer peaks at ~25× and ~50× coverage, corresponding to heterozygous and homozygous loci respectively, confirming the diploid structure. The dominant higher peak and narrow distributions reflect high sequencing quality and low repeat content, while the minimal low-coverage tail (error k-mers) further supports data quality.
 
 ---
@@ -337,14 +338,28 @@ The **GenomeScope linear plot** shows two clear k-mer peaks at ~25× and ~50× c
 
 | Metric | Hap1 | Hap2 |
 |--------|------|------|
+| Expected genome size | 11,743,432 bp | 11,743,432 bp |
 | # scaffolds | 17 | 16 |
 | Total scaffold length | 12,160,988 bp | 11,304,582 bp |
-| Scaffold N50 | 923,452 bp | 922,000 bp |
-| Scaffold auN | 904,515 bp | ~895,000 bp |
-| Scaffold L50 | 6 | 6 |
-| Largest scaffold | 1,531,728 bp | — |
-| # gaps | 0 | 0 |
-| GC content | 38.18% | — |
+| Average scaffold length | 715,352.24 bp | 706,536.38 bp |
+| Scaffold N50 | 923,452 bp | 922,430 bp |
+| Scaffold auN | 904,515.33 bp | 895,015.76 bp |
+| Scaffold L50 | 6 | 5 |
+| Scaffold NG50 | 923,452 bp | 813,311 bp |
+| Scaffold auNG | 936,676.78 bp | 861,569.18 bp |
+| Scaffold LG50 | 6 | 6 |
+| Largest scaffold | 1,531,728 bp | 1,532,843 bp |
+| Smallest scaffold | 85,850 bp | 185,224 bp |
+| # contigs | 17 | 16 |
+| Total contig length | 12,160,988 bp | 11,304,582 bp |
+| Contig N50 | 923,452 bp | 922,430 bp |
+| Contig auN | 904,515.33 bp | 895,015.76 bp |
+| Contig L50 | 6 | 5 |
+| # gaps in scaffolds | 0 | 0 |
+| Total gap length | 0 | 0 |
+| Base composition (A:C:G:T) | 3765774:2323161:2319686:3752367 | 3490449:2170182:2165546:3478405 |
+| GC content % | 38.18% | 38.35% |
+| # soft-masked bases | 0 | 0 |
 
 **Hap1:** The assembly consists of 17 scaffolds totalling ~12.16 Mb, slightly exceeding the expected genome size (~11.74 Mb). This modest inflation may indicate residual haplotypic duplication or incomplete collapsing of homologous regions. The high scaffold N50 (~923 kb) and auN (~905 kb) indicate strong contiguity. The absence of gaps (0 gaps) reflects the high continuity achieved by HiFi long reads.
 
@@ -363,6 +378,8 @@ The **GenomeScope linear plot** shows two clear k-mer peaks at ~25× and ~50× c
 | Missing (M) | 1.4% (30) | 8.5% (181) |
 | Lineage | saccharomycetes_odb10 | saccharomycetes_odb10 |
 
+![BUSCO Hap1 Summary](results/busco/BUSCO%20hap1%20-%20Summary%20image.png)
+![BUSCO Hap2 Summary](results/busco/BUSCO%20hap2-%20Summary%20image.png)
 **Hap1** shows high biological completeness (95.2% complete BUSCOs), with the large majority being single-copy (93.3%), indicating accurate gene representation without significant redundancy. The low duplication rate (1.9%) and small missing/fragmented fractions suggest a high-quality, near-complete assembly.
 
 **Hap2** shows notably lower completeness (87.9%), with a considerably higher proportion of missing genes (8.5%). While duplication remains low (1.4%), the elevated missing and fragmented BUSCOs suggest reduced gene recovery, possibly due to collapsed or incompletely reconstructed regions. Hap2 is therefore less complete from a gene-content perspective, despite its better agreement with expected genome size.
@@ -381,16 +398,17 @@ The Merqury QV statistics indicate exceptionally high consensus accuracy across 
 
 ### Merqury — Spectra-cn Plot
 
+![Spectra-cn Plot](results/merqury/hap1%20and%20hap2%20Merqury%20plots%20(using%20merged%20meryldb)/output_merqury.spectra-cn.ln.png)
 The spectra-cn (copy-number spectra) plot shows that the vast majority of k-mers are found at copy number 1 (red peak, ~25× and ~50× multiplicity), reflecting single-haplotype representation. The near-absence of k-mers at copy numbers ≥2 confirms minimal artificial duplication. The small read-only k-mer signal (black, low coverage) indicates minimal sequence is missing from the assembly, supporting overall completeness.
 
 ### Merqury — Spectra-asm Plot
-
+![Spectra-asm Plot](results/merqury/hap1%20and%20hap2%20Merqury%20plots%20(using%20merged%20meryldb)/output_merqury.spectra-asm.ln.png)
 The spectra-asm plot reveals the k-mer distribution across both assemblies. The large shared (green) peak at ~50× demonstrates that most genomic content is correctly captured and shared between hap1 and hap2. The overlapping but distinct assembly-specific peaks (red for hap1, blue for hap2) at ~25× reflect genuine haplotype-level differences rather than assembly errors. The low read-only signal (black) confirms minimal missing sequence overall.
 
 ---
 
 ### Hi-C Contact Map (YaHS — pretext_snapshotFullMap.png)
-
+![Hi-C Contact Map YaHS](results/scaffolding/Pretext%20Snapshot%20for%20PretextMap%20output%20YaHS/pretext_snapshotFullMap.png)
 The post-YaHS Hi-C contact map shows a strong, continuous diagonal with well-defined square blocks, each corresponding to an individual chromosome-scale scaffold. The clear separation between blocks and the near-absence of off-diagonal signal indicate correctly ordered and oriented contigs with minimal misassemblies — no major inter-chromosomal contacts or structural inconsistencies are visible. This reflects a high-quality scaffolding outcome with chromosome-scale organisation and good long-range structural accuracy.
 
 ---
@@ -409,7 +427,7 @@ A summary comparison is provided below:
 | Total genome size | ~12.16 Mb | ~11.30 Mb | ~12.16 Mb |
 | # chromosomes / scaffolds | 17 | 16 | 17 (16 chr + mito) |
 | Scaffold N50 | ~923 kb | ~922 kb | ~924 kb |
-| GC content | 38.18% | — | ~38.2% |
+| GC content | 38.18% | 38.35% | ~38.2% |
 | % complete BUSCOs | 95.2% | 87.9% | ~99% (reference) |
 | Gaps | 0 | 0 | Minimal |
 
